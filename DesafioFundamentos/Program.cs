@@ -3,15 +3,12 @@
 // Coloca o encoding para UTF8 para exibir acentuação
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-decimal precoInicial = 0;
-decimal precoPorHora = 0;
+Console.WriteLine("Seja bem vindo ao sistema de estacionamento!");
 
-Console.WriteLine("Seja bem vindo ao sistema de estacionamento!\n" +
-                  "Digite o preço inicial:");
-precoInicial = Convert.ToDecimal(Console.ReadLine());
+// Obtém o preço inicial e o preço por hora do usuário 
+decimal precoInicial = ObterPreco("Digite o preço inicial: ");
+decimal precoPorHora = ObterPreco("Digite o preço por hora: ");
 
-Console.WriteLine("Agora digite o preço por hora:");
-precoPorHora = Convert.ToDecimal(Console.ReadLine());
 
 // Instancia a classe Estacionamento, já com os valores obtidos anteriormente
 Estacionamento es = new Estacionamento(precoInicial, precoPorHora);
@@ -57,3 +54,22 @@ while (exibirMenu)
 }
 
 Console.WriteLine("O programa se encerrou");
+
+// Método que obtém um preço numérico com tratamento de erro 
+decimal ObterPreco(string mensagem)
+{
+    decimal preco;
+    while (true)
+    {
+        Console.Write(mensagem);
+        if (decimal.TryParse(Console.ReadLine(), out preco) && preco > 0)
+        {
+            break;
+        }
+        else
+        {
+            Console.WriteLine("Digite um valor numérico posítivo.");
+        }
+    }
+    return preco;
+}
